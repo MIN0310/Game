@@ -33,22 +33,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Log.d("MainActivity", "onClick: UP");
 //                gameView.posY = gameView.posY-50; 或
 //                gameView.posY -= 50;
-                gameView.setPosY(gameView.getPosY() - 50);
+//                gameView.setPosY(gameView.getPosY() - 50);
+                gameView.moveUp();
                 gameView.invalidate();
                 break;
             case R.id.button_down:
                 Log.d("MainActivity", "onClick: DOWN");
-                gameView.setPosY(gameView.getPosY() + 50);
+//                gameView.setPosY(gameView.getPosY() + 50);
+                gameView.moveDown();
                 gameView.invalidate();
                 break;
             case R.id.button_left:
                 Log.d("MainActivity", "onClick: LEFT");
-                gameView.setPosX(gameView.getPosX() - 50);
+//                gameView.setPosX(gameView.getPosX() - 50);
+                gameView.moveLeft();
                 gameView.invalidate();
                 break;
             case R.id.button_right:
                 Log.d("MainActivity", "onClick: RIGHT");
-                gameView.setPosX(gameView.getPosX() + 50);
+//                gameView.setPosX(gameView.getPosX() + 50);
+                gameView.moveRight();
                 gameView.invalidate();
                 break;
         }
