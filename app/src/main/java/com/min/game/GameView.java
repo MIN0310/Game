@@ -13,63 +13,50 @@ import android.view.View;
 import androidx.annotation.Nullable;
 
 public class GameView extends View {
-    private float posX, posY = 400;
+    private Dock dock;
+    private Paint paint = new Paint();
+    private Bitmap bitmapDock;
+    private Bitmap bitmapDead;
+
     public GameView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
     }
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        Log.d("Game", "onDraw: " + posX + ", " + posY);
-        Paint paint0 = new Paint();
-        Paint paint = new Paint();
-        paint.setColor(Color.rgb(255, 192, 203));
-        paint.setStrokeWidth(10);
-        canvas.drawLine(400,0, 0, 600, paint);
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.dock);
-        canvas.drawBitmap(bitmap, posX, posY, paint);
+        if(dock ==null) {
+            dock = new Dock(this);
+        }
+        Log.d("Game", "onDraw: " + getWidth() + ", " + getHeight());
+        bitmapDock = BitmapFactory.decodeResource(getResources(), R.drawable.dock);
+        bitmapDead = BitmapFactory.decodeResource(getResources(), R.drawable.dead);
+        if(dock.getDirection() == Dock.DIRECTION_DEAD) {
+            bitmapDock = bitmapDead;
+        }
+        canvas.drawBitmap(bitmapDock, dock.getX(), dock.getY(), paint);
     }
 
-    public float getPosX() {
-        return posX;
-    }
-
-//    public void setPosX(float posX) {
-//        if(posX > -20 && posX < getWidth() - 140) {
-//            this.posX = posX;
-//        }
-//    }
     public void moveRight() {
-        if(posX < getWidth()-200) {
-            posX = posX+50;
+        if(dock.getX() < getWidth()-200) {
+            dock.setDirection(Dock.DIRECTION_RIGHT);
             invalidate();
         }
     }
     public void moveLeft() {
-        if(posX > 0) {
-            posX = posX-50;
+        if(dock.getX() > 0) {
+            dock.setDirection(Dock.DIRECTION_LEFT);
             invalidate();
         }
     }
-
-    public float getPosY() {
-        return posY;
-    }
-
-//    public void setPosY(float posY) {
-//        if(posY > 0 && posY < getHeight() - 140) {
-//            this.posY = posY;
-//        }
-//    }
     public void moveUp() {
-        if(posY > 50) {
-            posY = posY-50;
+        if(dock.getY() > 50) {
+            dock.setDirection(Dock.DIRECTION_UP);
             invalidate();
         }
     }
     public void moveDown() {
-        if(posY < getHeight()-200) {
-            posY = posY+50;
+        if(dock.getY() < getHeight()-200) {
+            dock.setDirection(Dock.DIRECTION_DOWN);
             invalidate();
         }
     }
